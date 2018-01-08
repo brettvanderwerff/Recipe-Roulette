@@ -5,6 +5,8 @@ Recipe Roulette
 Script searches for a random recipe using recipepuppy.com's API (http://www.recipepuppy.com/about/api/).
 The user has the option of inputting an ingredient they would like the recipe to use, if they do not input
 an ingredient one will be chosen at random to guide the search.
+
+See: http://www.recipepuppy.com/ for more details.
 """
 from default_ingedient_list import default_ingredient_list
 import random
