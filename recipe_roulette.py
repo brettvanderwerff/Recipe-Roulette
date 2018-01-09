@@ -12,24 +12,18 @@ from default_ingedient_list import default_ingredient_list
 import random
 import requests
 import time
-import webbrowser # this is a module included in the standard library that allows Python to open the user's browser 
+import webbrowser 
 
 def get_user_ingredient():
     """Gets a preferred ingredient from the user, which will be used to guide the 'random' recipe search.
     """
     while True:
         user_chosen_ingredient = input('Please enter your ingredient of choice and press \'enter\' when finished!')
-        if not (user_chosen_ingredient.strip()).isalpha(): # replaced .replace(' ', '') with .strip(), which is a string method
-            print('I\'m sorry we only take alphabet input here.')      # that accomplishes the same thing, with the added benefit 
-            continue                                                   # of being able to remove multiple spaces or tab characters
+        if not (user_chosen_ingredient.strip()).isalpha(): 
+            print('I\'m sorry we only take alphabet input here.')       
+            continue                                                   
         else:
             return user_chosen_ingredient
-
-def get_random_ingredient():
-    """Generates a random ingredient to guide the recipe search.
-    """
-    # removed needless variable here  
-    return random.choice(default_ingredient_list) # and moved the logic of the function to the return statement
 
 def get_user_input():
 
@@ -44,14 +38,13 @@ def get_user_input():
                   .format(user_ingredient.lower()))
             break
         elif user_input.lower() == 'n':
-            user_ingredient = get_random_ingredient() # this is a bit unneccesarry, can very easily inline this function's logic 
+            user_ingredient = random.choice(default_ingredient_list) 
             print('That\'s okay, we\'ll pick something out for you! \n'
-                  'Why don\'t we try something including {} as an ingredient?' # replaced period with question mark
+                  'Why don\'t we try something including {} as an ingredient?' 
                   .format(user_ingredient.lower()))
             break
         else:
             print('I did not understand could you try that again?')
-            continue
     return user_ingredient
 
 def get_random_recipe():
@@ -73,7 +66,7 @@ def get_random_recipe():
     while True:
         sanitized_ingredient_for_url = ingredient.replace(' ', '+') # using verbs to name variables is bad practice 
         url = 'http://www.recipepuppy.com/api/?i={}&p={}'.format(sanitized_ingredient_for_url, random.randint(1,100))
-        request_recipe = requests.get(url) # url doesn't need to be a var if this is the only place it's going to be evoked
+        request_recipe = requests.get(url) 
         if request_recipe.status_code == 200:
             try:
                 request_recipe_json = request_recipe.json()
@@ -91,21 +84,20 @@ def get_random_recipe():
                 break
         else:
             print(request_recipe.status_code)
-            print('Sorry there was an error.') # there was a small typo here
+            print('Sorry there was an error.') 
             break
-
 
 def main():
         while True:
             random_recipe = get_random_recipe()
             if random_recipe:
                 print('opening {} in your browser'.format(random_recipe)) #
-                webbrowser.open_new_tab(random_recipe) # this opens a new tab in the user's browser if their browser is open, will 
-                break                                  # launch the user's browser before opening a new tab otherwise
+                webbrowser.open_new_tab(random_recipe)  
+                break                                  
             else:
                 continue
 
-if __name__ == '__main__': # this tells the Python interpreter whether the program is being evoked directly and should run main()
-        main()             # or being imported into another program so that it's other functions may be used 
+if __name__ == '__main__': 
+        main()              
 
 
