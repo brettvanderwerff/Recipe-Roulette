@@ -18,7 +18,7 @@ def get_user_ingredient():
     """
     while True:
         user_chosen_ingredient = input('Please enter your ingredient of choice and press \'enter\' when finished!')
-        if not user_chosen_ingredient.isalpha():
+        if not (user_chosen_ingredient.replace(' ', '')).isalpha():
             print('I\'m sorry we only take alphabet input here.')
             continue
         else:
