@@ -20,7 +20,6 @@ def get_user_ingredient():
         user_chosen_ingredient = input('Please enter your ingredient of choice and press \'enter\' when finished!')
         if not (user_chosen_ingredient.replace(' ', '')).isalpha():
             print('I\'m sorry we only take alphabet input here.')
-            continue
         else:
             return user_chosen_ingredient
 
@@ -49,7 +48,6 @@ def get_user_input():
             break
         else:
             print('I did not understand could you try that again?')
-            continue
     return user_ingredient
 
 def get_random_recipe():
@@ -97,8 +95,7 @@ while True:
     if random_recipe:
         print(random_recipe)
         break
-    else:
-        continue
+ 
 
 
 
