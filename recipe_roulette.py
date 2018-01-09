@@ -23,7 +23,6 @@ def get_user_ingredient():
             continue
         else:
             return user_chosen_ingredient
-            break
 
 def get_random_ingredient():
     """Generates a random ingredient to guide the recipe search.
