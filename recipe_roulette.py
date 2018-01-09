@@ -63,7 +63,7 @@ def get_random_recipe():
     ingredient = get_user_input()
     try_counter = 0
     while True:
-        sanitized_ingredient_for_url = ingredient.replace(' ', '+') # using verbs to name variables is bad practice
+        sanitized_ingredient_for_url = ingredient.replace(' ', '+') 
         url = 'http://www.recipepuppy.com/api/?i={}&p={}'.format(sanitized_ingredient_for_url, random.randint(1,100))
         request_recipe = requests.get(url)
         if request_recipe.status_code == 200:
