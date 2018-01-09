@@ -12,24 +12,21 @@ from default_ingedient_list import default_ingredient_list
 import random
 import requests
 import time
+import webbrowser 
 
 def get_user_ingredient():
     """Gets a preferred ingredient from the user, which will be used to guide the 'random' recipe search.
     """
     while True:
         user_chosen_ingredient = input('Please enter your ingredient of choice and press \'enter\' when finished!')
-        if not (user_chosen_ingredient.replace(' ', '')).isalpha():
-            print('I\'m sorry we only take alphabet input here.')
+        if not (user_chosen_ingredient.strip()).isalpha(): 
+            print('I\'m sorry we only take alphabet input here.')       
+            continue                                                   
         else:
             return user_chosen_ingredient
 
-def get_random_ingredient():
-    """Generates a random ingredient to guide the recipe search.
-    """
-    random_ingredient = random.choice(default_ingredient_list)
-    return random_ingredient
-
 def get_user_input():
+
     """Asks the user if they have a preference for an ingredient, which is used to guide the recipe search.
     If they don't have a preference a function is called to generate an ingredient randomly to guide the recipe search.
     """
@@ -41,9 +38,9 @@ def get_user_input():
                   .format(user_ingredient.lower()))
             break
         elif user_input.lower() == 'n':
-            user_ingredient = get_random_ingredient()
+            user_ingredient = random.choice(default_ingredient_list) 
             print('That\'s okay, we\'ll pick something out for you! \n'
-                  'Why don\'t we try something including {} as an ingredient.'
+                  'Why don\'t we try something including {} as an ingredient?' 
                   .format(user_ingredient.lower()))
             break
         else:
@@ -67,9 +64,9 @@ def get_random_recipe():
     ingredient = get_user_input()
     try_counter = 0
     while True:
-        sanitize_ingredient_for_url = ingredient.replace(' ', '+')
-        url = 'http://www.recipepuppy.com/api/?i={}&p={}'.format(sanitize_ingredient_for_url, random.randint(1,100))
-        request_recipe = requests.get(url)
+        sanitized_ingredient_for_url = ingredient.replace(' ', '+') # using verbs to name variables is bad practice 
+        url = 'http://www.recipepuppy.com/api/?i={}&p={}'.format(sanitized_ingredient_for_url, random.randint(1,100))
+        request_recipe = requests.get(url) 
         if request_recipe.status_code == 200:
             try:
                 request_recipe_json = request_recipe.json()
@@ -87,16 +84,20 @@ def get_random_recipe():
                 break
         else:
             print(request_recipe.status_code)
-            print('Sorry there was en error.')
+            print('Sorry there was an error.') 
             break
 
-while True:
-    random_recipe = get_random_recipe()
-    if random_recipe:
-        print(random_recipe)
-        break
- 
+def main():
+        while True:
+            random_recipe = get_random_recipe()
+            if random_recipe:
+                print('opening {} in your browser'.format(random_recipe)) #
+                webbrowser.open_new_tab(random_recipe)  
+                break                                  
+            else:
+                continue
 
-
+if __name__ == '__main__': 
+        main()              
 
 
